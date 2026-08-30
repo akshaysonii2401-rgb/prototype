@@ -1,173 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Personal AI Assistant</title>
-
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assist — Personal Company Chat</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
 
-<div class="app">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-        <div class="brand">
-            <div class="brand-icon">🤖</div>
-
-            <div>
-                <h2>My Assistant</h2>
-                <span>Personal AI</span>
-            </div>
-        </div>
-
-
-        <button id="newChatBtn" class="new-chat">
-            <span>＋</span>
-            New chat
-        </button>
-
-
-        <div class="history-title">
-            Recent chats
-        </div>
-
-
-        <div id="chatHistory" class="chat-history">
-            <!-- Previous chats appear here -->
-        </div>
-
-
-        <div class="sidebar-bottom">
-
-            <button class="side-button">
-                ⚙️
-                <span>Settings</span>
-            </button>
-
-            <div class="storage-status">
-                ● Chats stored locally
-            </div>
-
-        </div>
-
-    </aside>
-
-
-    <!-- MAIN CHAT -->
-    <main class="main">
-
-        <!-- HEADER -->
-
-        <header class="topbar">
-
-            <button id="mobileMenu" class="mobile-menu">
-                ☰
-            </button>
-
-            <div>
-                <h3 id="chatTitle">New conversation</h3>
-                <span class="online">
-                    ● Personal assistant
-                </span>
-            </div>
-
-        </header>
-
-
-        <!-- CHAT AREA -->
-
-        <section id="chatArea" class="chat-area">
-
-            <!-- Welcome message -->
-
-            <div id="welcome" class="welcome">
-
-                <div class="welcome-icon">
-                    🤖
-                </div>
-
-                <h1>How can I help you?</h1>
-
-                <p>
-                    Choose an option below or type your own message.
-                </p>
-
-            </div>
-
-        </section>
-
-
-        <!-- OPTIONS -->
-
-        <section class="option-area">
-
-            <div class="option-label">
-                Choose an option
-            </div>
-
-            <div id="options" class="options">
-
-                <button class="option-btn" data-option="Study">
-                    📚
-                    <span>Study</span>
-                </button>
-
-                <button class="option-btn" data-option="Coding">
-                    💻
-                    <span>Coding</span>
-                </button>
-
-                <button class="option-btn" data-option="Writing">
-                    ✍️
-                    <span>Writing</span>
-                </button>
-
-                <button class="option-btn" data-option="Projects">
-                    🚀
-                    <span>Projects</span>
-                </button>
-
-            </div>
-
-        </section>
-
-
-        <!-- MESSAGE BOX -->
-
-        <div class="composer-container">
-
-            <div class="composer">
-
-                <textarea
-                    id="messageInput"
-                    placeholder="Message your assistant..."
-                    rows="1"
-                ></textarea>
-
-                <button id="sendBtn" class="send-btn">
-                    ➤
-                </button>
-
-            </div>
-
-            <p class="composer-note">
-                Your conversations are stored on this device.
-            </p>
-
-        </div>
-
-    </main>
-
+<div id="sidebar">
+  <div class="brand"><span class="brand-dot"></span>Assist</div>
+  <button id="new-chat-btn">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+    New chat
+  </button>
+  <div id="history-label">Recent chats</div>
+  <div id="chat-list"></div>
+  <div id="sidebar-footer">Your chats are saved automatically.</div>
 </div>
 
+<div id="main">
+  <div id="topbar">
+    <div>
+      <div id="chat-title">New chat</div>
+      <div id="chat-subtitle">Pick a topic to get started, or just type below.</div>
+    </div>
+    <div id="status-pill"><span class="dot"></span>Online</div>
+  </div>
+
+  <div id="scroll-area">
+    <div id="thread"></div>
+    <div id="empty-state">
+      <div class="icon-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DCE4FF" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+      </div>
+      <h2>How can I help you today?</h2>
+      <p>Choose an option below, or type your own question — I'll pick up from there either way.</p>
+    </div>
+  </div>
+
+  <div id="composer-wrap">
+    <div id="composer">
+      <textarea id="msg-input" rows="1" placeholder="Message Assist..."></textarea>
+      <button id="send-btn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 2 11 13"/><path d="M22 2 15 22l-4-9-9-4z"/></svg>
+      </button>
+    </div>
+    <div id="composer-hint">Assist can make mistakes. Verify important information.</div>
+  </div>
+</div>
 
 <script src="script.js"></script>
-
 </body>
 </html>
