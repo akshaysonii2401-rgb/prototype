@@ -1,0 +1,159 @@
+```css
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6fb;
+    min-height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.app {
+    width: 100%;
+    max-width: 600px;
+    min-height: 100vh;
+
+    background: white;
+    padding: 25px;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+header h1 {
+    font-size: 28px;
+    margin-bottom: 8px;
+}
+
+header p {
+    color: #777;
+}
+
+.screen {
+    display: none;
+}
+
+.screen.active {
+    display: block;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.options,
+.actions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+}
+
+.options button,
+.actions button {
+    border: 1px solid #ddd;
+    background: white;
+
+    border-radius: 15px;
+    padding: 25px 10px;
+
+    font-size: 30px;
+    cursor: pointer;
+
+    transition: 0.2s;
+}
+
+.options button:hover,
+.actions button:hover {
+    transform: translateY(-3px);
+}
+
+.options span,
+.actions span {
+    display: block;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+.back {
+    border: none;
+    background: none;
+
+    font-size: 16px;
+    cursor: pointer;
+
+    margin-bottom: 25px;
+}
+
+input {
+    width: 100%;
+
+    padding: 16px;
+
+    border: 1px solid #ddd;
+    border-radius: 12px;
+
+    font-size: 16px;
+
+    margin-bottom: 15px;
+}
+
+.continue {
+    width: 100%;
+
+    padding: 16px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: #111;
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+}
+
+.result-box {
+    background: #f5f5f5;
+
+    padding: 20px;
+
+    border-radius: 15px;
+
+    line-height: 1.6;
+
+    margin-top: 20px;
+}
+
+@media (max-width: 450px) {
+
+    .app {
+        padding: 20px;
+    }
+
+    header h1 {
+        font-size: 24px;
+    }
+
+    .options,
+    .actions {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+```
