@@ -1,11 +1,3 @@
-/* =========================================================================
-   OPTION TREE — edit this to define your own categories / sub-options.
-   Each node is either:
-     { label: "...", children: [ ...nodes ] }   -> shows more buttons
-     { label: "...", prompt: "..." }             -> sends `prompt` to the bot
-   `prompt` is the instruction actually sent to the AI when this leaf is
-   clicked, so it can be more detailed than the button label if you want.
-   ========================================================================= */
 const OPTION_TREE = {
   label: "root",
   children: [
@@ -42,12 +34,11 @@ const OPTION_TREE = {
   ]
 };
 
-/* ========================= State & persistence ========================= */
-let sessions = {};      // id -> {id, title, createdAt, messages:[{role, content}]}
-let sessionOrder = [];  // ids, most recent first
+let sessions = {};
+let sessionOrder = [];
 let currentId = null;
-let currentNode = OPTION_TREE;   // where we are in the option tree for the active chat
-let navPath = [];        // labels for breadcrumb context sent to the model
+let currentNode = OPTION_TREE;
+let navPath = [];
 
 const INDEX_KEY = "session-index";
 
@@ -73,7 +64,6 @@ async function deleteSessionStorage(id){
   try{ await window.storage.delete("session:"+id, false); }catch(e){}
 }
 
-/* ============================== DOM refs ================================ */
 const chatListEl = document.getElementById("chat-list");
 const threadEl = document.getElementById("thread");
 const scrollArea = document.getElementById("scroll-area");
@@ -83,7 +73,6 @@ const chatSubtitleEl = document.getElementById("chat-subtitle");
 const inputEl = document.getElementById("msg-input");
 const sendBtn = document.getElementById("send-btn");
 
-/* ============================== Rendering ================================ */
 function renderSidebar(){
   chatListEl.innerHTML = "";
   sessionOrder.forEach(id=>{
@@ -173,7 +162,6 @@ function scrollToBottom(){
   requestAnimationFrame(()=>{ scrollArea.scrollTop = scrollArea.scrollHeight; });
 }
 
-/* ============================== Session mgmt ============================= */
 function newId(){ return "c_" + Date.now() + "_" + Math.random().toString(36).slice(2,8); }
 
 async function startNewChat(persist=true){
@@ -209,14 +197,12 @@ async function selectOption(node){
     renderOptionsIfAny();
     return;
   }
-  // leaf node -> treat the label as a user-visible action, prompt as the hidden instruction
   currentNode = null;
   await addUserMessage(node.label, node.prompt);
 }
 
 function goBack(){
   navPath.pop();
-  // walk from root again for the remaining path
   let node = OPTION_TREE;
   for(const label of navPath){
     node = node.children.find(c=>c.label===label);
@@ -225,7 +211,6 @@ function goBack(){
   renderOptionsIfAny();
 }
 
-/* ============================== Messaging ================================ */
 async function addUserMessage(displayText, hiddenPrompt){
   const s = sessions[currentId];
   s.messages.push({ role:"user", content: displayText });
@@ -282,7 +267,6 @@ async function requestBotReply(userText){
   }
 }
 
-/* ============================== Input handlers ============================ */
 function autoGrow(){
   inputEl.style.height = "auto";
   inputEl.style.height = Math.min(inputEl.scrollHeight, 140) + "px";
@@ -301,13 +285,12 @@ async function handleSend(){
   if(!text) return;
   inputEl.value = "";
   autoGrow();
-  currentNode = null; // free typing exits the menu flow
+  currentNode = null;
   await addUserMessage(text, text);
 }
 
 document.getElementById("new-chat-btn").addEventListener("click", ()=>startNewChat(true));
 
-/* ============================== Boot ===================================== */
 async function boot(){
   sessionOrder = await loadIndex();
   for(const id of sessionOrder){
