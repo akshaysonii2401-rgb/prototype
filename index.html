@@ -1,0 +1,142 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>AI Learning Assistant</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="app">
+
+        <header>
+            <h1>🤖 AI Learning Assistant</h1>
+            <p>Your personal study companion</p>
+        </header>
+
+        <main>
+
+            <!-- STEP 1: SELECT SUBJECT -->
+            <section id="subject-screen" class="screen active">
+
+                <h2>What do you want to learn?</h2>
+                <p class="subtitle">Choose a subject</p>
+
+                <div class="options">
+
+                    <button onclick="selectSubject('Python')">
+                        🐍
+                        <span>Python</span>
+                    </button>
+
+                    <button onclick="selectSubject('Java')">
+                        ☕
+                        <span>Java</span>
+                    </button>
+
+                    <button onclick="selectSubject('HTML & CSS')">
+                        🌐
+                        <span>HTML & CSS</span>
+                    </button>
+
+                    <button onclick="selectSubject('JavaScript')">
+                        ⚡
+                        <span>JavaScript</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- STEP 2: SELECT ACTION -->
+            <section id="action-screen" class="screen">
+
+                <button class="back" onclick="goBack()">← Back</button>
+
+                <h2 id="selected-subject"></h2>
+
+                <p class="subtitle">
+                    What would you like to do?
+                </p>
+
+                <div class="actions">
+
+                    <button onclick="selectAction('Explain')">
+                        📖
+                        <span>Explain Topic</span>
+                    </button>
+
+                    <button onclick="selectAction('Notes')">
+                        📝
+                        <span>Make Notes</span>
+                    </button>
+
+                    <button onclick="selectAction('Quiz')">
+                        ❓
+                        <span>Generate Quiz</span>
+                    </button>
+
+                    <button onclick="selectAction('Practice')">
+                        💻
+                        <span>Practice Problems</span>
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- STEP 3: ENTER TOPIC -->
+            <section id="topic-screen" class="screen">
+
+                <button class="back" onclick="goBackToActions()">
+                    ← Back
+                </button>
+
+                <h2 id="action-title"></h2>
+
+                <p class="subtitle">
+                    Enter the topic you want help with
+                </p>
+
+                <input
+                    type="text"
+                    id="topic-input"
+                    placeholder="Example: Python loops"
+                >
+
+                <button class="continue" onclick="generateResponse()">
+                    Continue →
+                </button>
+
+            </section>
+
+
+            <!-- STEP 4: RESULT -->
+            <section id="result-screen" class="screen">
+
+                <button class="back" onclick="restart()">
+                    ← Start Again
+                </button>
+
+                <h2>🤖 Assistant</h2>
+
+                <div id="result" class="result-box"></div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
+```
