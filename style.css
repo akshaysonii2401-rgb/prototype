@@ -1,159 +1,744 @@
-```css
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+/* =====================================
+   PERSONAL AI ASSISTANT
+   PROTOTYPE V2
+===================================== */
+
+
+/* =====================================
+   VARIABLES
+===================================== */
+
+let chats = JSON.parse(
+    localStorage.getItem("personalAI_chats")
+) || [];
+
+let currentChatId = null;
+
+let selectedOption = null;
+
+
+/* =====================================
+   DOM ELEMENTS
+===================================== */
+
+const chatArea =
+    document.getElementById("chatArea");
+
+const chatHistory =
+    document.getElementById("chatHistory");
+
+const messageInput =
+    document.getElementById("messageInput");
+
+const sendBtn =
+    document.getElementById("sendBtn");
+
+const newChatBtn =
+    document.getElementById("newChatBtn");
+
+const options =
+    document.getElementById("options");
+
+const chatTitle =
+    document.getElementById("chatTitle");
+
+const mobileMenu =
+    document.getElementById("mobileMenu");
+
+const sidebar =
+    document.querySelector(".sidebar");
+
+
+/* =====================================
+   INITIALIZE
+===================================== */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    renderHistory();
+
+    createNewChat();
+
+});
+
+
+/* =====================================
+   NEW CHAT
+===================================== */
+
+function createNewChat() {
+
+    currentChatId =
+        Date.now().toString();
+
+    selectedOption = null;
+
+    chatArea.innerHTML = `
+
+        <div id="welcome" class="welcome">
+
+            <div class="welcome-icon">
+                🤖
+            </div>
+
+            <h1>How can I help you?</h1>
+
+            <p>
+                Choose an option below or type your own message.
+            </p>
+
+        </div>
+
+    `;
+
+    chatTitle.textContent =
+        "New conversation";
+
+    messageInput.value = "";
+
+    document
+        .querySelectorAll(".option-btn")
+        .forEach(button => {
+            button.style.display = "flex";
+        });
+
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f6fb;
-    min-height: 100vh;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+/* =====================================
+   NEW CHAT BUTTON
+===================================== */
+
+newChatBtn.addEventListener("click", () => {
+
+    createNewChat();
+
+    sidebar.classList.remove("open");
+
+});
+
+
+/* =====================================
+   OPTION BUTTONS
+===================================== */
+
+document
+    .querySelectorAll(".option-btn")
+    .forEach(button => {
+
+        button.addEventListener("click", () => {
+
+            const option =
+                button.dataset.option;
+
+            selectOption(option);
+
+        });
+
+    });
+
+
+/* =====================================
+   SELECT OPTION
+===================================== */
+
+function selectOption(option) {
+
+    selectedOption = option;
+
+    /*
+       Show user's selection
+    */
+
+    addMessage(
+        `I want help with ${option}.`,
+        "user"
+    );
+
+
+    /*
+       Show next options
+    */
+
+    showNextOptions(option);
+
 }
 
-.app {
-    width: 100%;
-    max-width: 600px;
-    min-height: 100vh;
 
-    background: white;
-    padding: 25px;
-}
+/* =====================================
+   NEXT OPTIONS
+===================================== */
 
-header {
-    text-align: center;
-    margin-bottom: 45px;
-}
+function showNextOptions(option) {
 
-header h1 {
-    font-size: 28px;
-    margin-bottom: 8px;
-}
+    const optionsContainer =
+        document.getElementById("options");
 
-header p {
-    color: #777;
-}
+    let nextOptions = [];
 
-.screen {
-    display: none;
-}
 
-.screen.active {
-    display: block;
-}
+    if (option === "Study") {
 
-h2 {
-    text-align: center;
-    margin-bottom: 10px;
-}
+        nextOptions = [
+            ["📖", "Explain topic"],
+            ["📝", "Make notes"],
+            ["❓", "Generate quiz"],
+            ["🎯", "Practice"]
+        ];
 
-.subtitle {
-    text-align: center;
-    color: #777;
-    margin-bottom: 30px;
-}
-
-.options,
-.actions {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
-}
-
-.options button,
-.actions button {
-    border: 1px solid #ddd;
-    background: white;
-
-    border-radius: 15px;
-    padding: 25px 10px;
-
-    font-size: 30px;
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.options button:hover,
-.actions button:hover {
-    transform: translateY(-3px);
-}
-
-.options span,
-.actions span {
-    display: block;
-    font-size: 16px;
-    margin-top: 10px;
-}
-
-.back {
-    border: none;
-    background: none;
-
-    font-size: 16px;
-    cursor: pointer;
-
-    margin-bottom: 25px;
-}
-
-input {
-    width: 100%;
-
-    padding: 16px;
-
-    border: 1px solid #ddd;
-    border-radius: 12px;
-
-    font-size: 16px;
-
-    margin-bottom: 15px;
-}
-
-.continue {
-    width: 100%;
-
-    padding: 16px;
-
-    border: none;
-    border-radius: 12px;
-
-    background: #111;
-    color: white;
-
-    font-size: 16px;
-
-    cursor: pointer;
-}
-
-.result-box {
-    background: #f5f5f5;
-
-    padding: 20px;
-
-    border-radius: 15px;
-
-    line-height: 1.6;
-
-    margin-top: 20px;
-}
-
-@media (max-width: 450px) {
-
-    .app {
-        padding: 20px;
     }
 
-    header h1 {
-        font-size: 24px;
+
+    else if (option === "Coding") {
+
+        nextOptions = [
+            ["💡", "Explain code"],
+            ["🐛", "Debug code"],
+            ["⚡", "Generate code"],
+            ["📚", "Learn programming"]
+        ];
+
     }
 
-    .options,
-    .actions {
-        grid-template-columns: 1fr 1fr;
+
+    else if (option === "Writing") {
+
+        nextOptions = [
+            ["✍️", "Write something"],
+            ["📝", "Rewrite"],
+            ["📌", "Summarize"],
+            ["🔍", "Improve writing"]
+        ];
+
     }
+
+
+    else if (option === "Projects") {
+
+        nextOptions = [
+            ["💡", "Project idea"],
+            ["🏗️", "Build project"],
+            ["📋", "Project plan"],
+            ["🚀", "Improve project"]
+        ];
+
+    }
+
+
+    optionsContainer.innerHTML = "";
+
+
+    nextOptions.forEach(item => {
+
+        const button =
+            document.createElement("button");
+
+        button.className = "option-btn";
+
+        button.innerHTML = `
+            ${item[0]}
+            <span>${item[1]}</span>
+        `;
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                addMessage(
+                    `${item[1]} — ${option}`,
+                    "user"
+                );
+
+
+                /*
+                   In the real AI version,
+                   this is where we will
+                   call the AI.
+                */
+
+                simulateAssistant(
+                    option,
+                    item[1]
+                );
+
+            }
+        );
+
+        optionsContainer.appendChild(button);
+
+    });
+
 }
-```
+
+
+/* =====================================
+   SEND MESSAGE
+===================================== */
+
+sendBtn.addEventListener(
+    "click",
+    sendMessage
+);
+
+
+messageInput.addEventListener(
+    "keydown",
+    event => {
+
+        if (
+            event.key === "Enter" &&
+            !event.shiftKey
+        ) {
+
+            event.preventDefault();
+
+            sendMessage();
+
+        }
+
+    }
+);
+
+
+/* =====================================
+   SEND MESSAGE FUNCTION
+===================================== */
+
+function sendMessage() {
+
+    const text =
+        messageInput.value.trim();
+
+
+    if (!text) {
+        return;
+    }
+
+
+    addMessage(
+        text,
+        "user"
+    );
+
+
+    messageInput.value = "";
+
+
+    /*
+       Prototype response
+
+       Later this will be replaced
+       with the actual AI API.
+    */
+
+    simulateAssistant(
+        selectedOption || "General",
+        "Answer"
+    );
+
+}
+
+
+/* =====================================
+   ADD MESSAGE
+===================================== */
+
+function addMessage(text, sender) {
+
+    const welcome =
+        document.getElementById("welcome");
+
+    if (welcome) {
+        welcome.remove();
+    }
+
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        `message ${sender}-message`;
+
+
+    const avatar =
+        sender === "user"
+            ? "👤"
+            : "🤖";
+
+
+    const name =
+        sender === "user"
+            ? "You"
+            : "Assistant";
+
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            ${avatar}
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-name">
+                ${name}
+            </div>
+
+            <div>
+                ${escapeHTML(text)}
+            </div>
+
+        </div>
+
+    `;
+
+
+    chatArea.appendChild(message);
+
+
+    chatArea.scrollTop =
+        chatArea.scrollHeight;
+
+
+    /*
+       Save conversation
+    */
+
+    saveMessage(
+        text,
+        sender
+    );
+
+}
+
+
+/* =====================================
+   PROTOTYPE AI RESPONSE
+===================================== */
+
+function simulateAssistant(
+    category,
+    action
+) {
+
+    setTimeout(() => {
+
+        let response = "";
+
+
+        if (action === "Explain topic") {
+
+            response =
+                `Sure! Tell me the topic you want me to explain in ${category}.`;
+
+        }
+
+        else if (action === "Make notes") {
+
+            response =
+                `Absolutely. Send me the ${category} topic and I'll prepare structured notes for you.`;
+
+        }
+
+        else if (action === "Generate quiz") {
+
+            response =
+                `Got it! Tell me the topic and I'll prepare a quiz for you.`;
+
+        }
+
+        else if (action === "Debug code") {
+
+            response =
+                `Send me your code and I'll help you find and understand the problem.`;
+
+        }
+
+        else if (action === "Generate code") {
+
+            response =
+                `Tell me what you want to build and which programming language you want to use.`;
+
+        }
+
+        else {
+
+            response =
+                `I'm ready. Tell me what you'd like help with.`;
+
+        }
+
+
+        addMessage(
+            response,
+            "assistant"
+        );
+
+    }, 500);
+
+}
+
+
+/* =====================================
+   SAVE MESSAGE
+===================================== */
+
+function saveMessage(text, sender) {
+
+    let chat =
+        chats.find(
+            c => c.id === currentChatId
+        );
+
+
+    /*
+       Create chat if it doesn't exist
+    */
+
+    if (!chat) {
+
+        chat = {
+
+            id: currentChatId,
+
+            title:
+                text.length > 30
+                    ? text.substring(0, 30) + "..."
+                    : text,
+
+            messages: [],
+
+            created:
+                new Date().toISOString()
+
+        };
+
+
+        chats.unshift(chat);
+
+    }
+
+
+    chat.messages.push({
+
+        text: text,
+
+        sender: sender,
+
+        time:
+            new Date().toISOString()
+
+    });
+
+
+    /*
+       Save to browser
+    */
+
+    localStorage.setItem(
+        "personalAI_chats",
+        JSON.stringify(chats)
+    );
+
+
+    /*
+       Update sidebar
+    */
+
+    renderHistory();
+
+
+    /*
+       Update title
+    */
+
+    if (chat.title) {
+
+        chatTitle.textContent =
+            chat.title;
+
+    }
+
+}
+
+
+/* =====================================
+   RENDER CHAT HISTORY
+===================================== */
+
+function renderHistory() {
+
+    chatHistory.innerHTML = "";
+
+
+    chats.forEach(chat => {
+
+        const button =
+            document.createElement("button");
+
+        button.className =
+            "history-item";
+
+
+        if (chat.id === currentChatId) {
+
+            button.classList.add("active");
+
+        }
+
+
+        button.textContent =
+            chat.title;
+
+
+        button.addEventListener(
+            "click",
+            () => {
+
+                loadChat(chat.id);
+
+                sidebar.classList.remove(
+                    "open"
+                );
+
+            }
+        );
+
+
+        chatHistory.appendChild(
+            button
+        );
+
+    });
+
+}
+
+
+/* =====================================
+   LOAD OLD CHAT
+===================================== */
+
+function loadChat(id) {
+
+    const chat =
+        chats.find(
+            c => c.id === id
+        );
+
+
+    if (!chat) {
+        return;
+    }
+
+
+    currentChatId = id;
+
+
+    chatTitle.textContent =
+        chat.title;
+
+
+    chatArea.innerHTML = "";
+
+
+    chat.messages.forEach(message => {
+
+        addMessageToScreen(
+            message.text,
+            message.sender
+        );
+
+    });
+
+
+    renderHistory();
+
+}
+
+
+/* =====================================
+   ADD MESSAGE WITHOUT SAVING
+===================================== */
+
+function addMessageToScreen(
+    text,
+    sender
+) {
+
+    const message =
+        document.createElement("div");
+
+    message.className =
+        `message ${sender}-message`;
+
+
+    const avatar =
+        sender === "user"
+            ? "👤"
+            : "🤖";
+
+
+    const name =
+        sender === "user"
+            ? "You"
+            : "Assistant";
+
+
+    message.innerHTML = `
+
+        <div class="avatar">
+            ${avatar}
+        </div>
+
+        <div class="message-content">
+
+            <div class="message-name">
+                ${name}
+            </div>
+
+            <div>
+                ${escapeHTML(text)}
+            </div>
+
+        </div>
+
+    `;
+
+
+    chatArea.appendChild(
+        message
+    );
+
+}
+
+
+/* =====================================
+   ESCAPE HTML
+===================================== */
+
+function escapeHTML(text) {
+
+    const div =
+        document.createElement("div");
+
+    div.textContent = text;
+
+    return div.innerHTML;
+
+}
+
+
+/* =====================================
+   MOBILE MENU
+===================================== */
+
+mobileMenu.addEventListener(
+    "click",
+    () => {
+
+        sidebar.classList.toggle(
+            "open"
+        );
+
+    }
+);
