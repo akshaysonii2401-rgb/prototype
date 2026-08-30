@@ -1,142 +1,173 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>AI Learning Assistant</title>
+    <title>Personal AI Assistant</title>
 
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-    <div class="app">
+<div class="app">
 
-        <header>
-            <h1>🤖 AI Learning Assistant</h1>
-            <p>Your personal study companion</p>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="brand">
+            <div class="brand-icon">🤖</div>
+
+            <div>
+                <h2>My Assistant</h2>
+                <span>Personal AI</span>
+            </div>
+        </div>
+
+
+        <button id="newChatBtn" class="new-chat">
+            <span>＋</span>
+            New chat
+        </button>
+
+
+        <div class="history-title">
+            Recent chats
+        </div>
+
+
+        <div id="chatHistory" class="chat-history">
+            <!-- Previous chats appear here -->
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            <button class="side-button">
+                ⚙️
+                <span>Settings</span>
+            </button>
+
+            <div class="storage-status">
+                ● Chats stored locally
+            </div>
+
+        </div>
+
+    </aside>
+
+
+    <!-- MAIN CHAT -->
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="topbar">
+
+            <button id="mobileMenu" class="mobile-menu">
+                ☰
+            </button>
+
+            <div>
+                <h3 id="chatTitle">New conversation</h3>
+                <span class="online">
+                    ● Personal assistant
+                </span>
+            </div>
+
         </header>
 
-        <main>
 
-            <!-- STEP 1: SELECT SUBJECT -->
-            <section id="subject-screen" class="screen active">
+        <!-- CHAT AREA -->
 
-                <h2>What do you want to learn?</h2>
-                <p class="subtitle">Choose a subject</p>
+        <section id="chatArea" class="chat-area">
 
-                <div class="options">
+            <!-- Welcome message -->
 
-                    <button onclick="selectSubject('Python')">
-                        🐍
-                        <span>Python</span>
-                    </button>
+            <div id="welcome" class="welcome">
 
-                    <button onclick="selectSubject('Java')">
-                        ☕
-                        <span>Java</span>
-                    </button>
-
-                    <button onclick="selectSubject('HTML & CSS')">
-                        🌐
-                        <span>HTML & CSS</span>
-                    </button>
-
-                    <button onclick="selectSubject('JavaScript')">
-                        ⚡
-                        <span>JavaScript</span>
-                    </button>
-
+                <div class="welcome-icon">
+                    🤖
                 </div>
 
-            </section>
+                <h1>How can I help you?</h1>
 
-
-            <!-- STEP 2: SELECT ACTION -->
-            <section id="action-screen" class="screen">
-
-                <button class="back" onclick="goBack()">← Back</button>
-
-                <h2 id="selected-subject"></h2>
-
-                <p class="subtitle">
-                    What would you like to do?
+                <p>
+                    Choose an option below or type your own message.
                 </p>
 
-                <div class="actions">
+            </div>
 
-                    <button onclick="selectAction('Explain')">
-                        📖
-                        <span>Explain Topic</span>
-                    </button>
-
-                    <button onclick="selectAction('Notes')">
-                        📝
-                        <span>Make Notes</span>
-                    </button>
-
-                    <button onclick="selectAction('Quiz')">
-                        ❓
-                        <span>Generate Quiz</span>
-                    </button>
-
-                    <button onclick="selectAction('Practice')">
-                        💻
-                        <span>Practice Problems</span>
-                    </button>
-
-                </div>
-
-            </section>
+        </section>
 
 
-            <!-- STEP 3: ENTER TOPIC -->
-            <section id="topic-screen" class="screen">
+        <!-- OPTIONS -->
 
-                <button class="back" onclick="goBackToActions()">
-                    ← Back
+        <section class="option-area">
+
+            <div class="option-label">
+                Choose an option
+            </div>
+
+            <div id="options" class="options">
+
+                <button class="option-btn" data-option="Study">
+                    📚
+                    <span>Study</span>
                 </button>
 
-                <h2 id="action-title"></h2>
-
-                <p class="subtitle">
-                    Enter the topic you want help with
-                </p>
-
-                <input
-                    type="text"
-                    id="topic-input"
-                    placeholder="Example: Python loops"
-                >
-
-                <button class="continue" onclick="generateResponse()">
-                    Continue →
+                <button class="option-btn" data-option="Coding">
+                    💻
+                    <span>Coding</span>
                 </button>
 
-            </section>
-
-
-            <!-- STEP 4: RESULT -->
-            <section id="result-screen" class="screen">
-
-                <button class="back" onclick="restart()">
-                    ← Start Again
+                <button class="option-btn" data-option="Writing">
+                    ✍️
+                    <span>Writing</span>
                 </button>
 
-                <h2>🤖 Assistant</h2>
+                <button class="option-btn" data-option="Projects">
+                    🚀
+                    <span>Projects</span>
+                </button>
 
-                <div id="result" class="result-box"></div>
+            </div>
 
-            </section>
+        </section>
 
-        </main>
 
-    </div>
+        <!-- MESSAGE BOX -->
 
-    <script src="script.js"></script>
+        <div class="composer-container">
+
+            <div class="composer">
+
+                <textarea
+                    id="messageInput"
+                    placeholder="Message your assistant..."
+                    rows="1"
+                ></textarea>
+
+                <button id="sendBtn" class="send-btn">
+                    ➤
+                </button>
+
+            </div>
+
+            <p class="composer-note">
+                Your conversations are stored on this device.
+            </p>
+
+        </div>
+
+    </main>
+
+</div>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
-```
